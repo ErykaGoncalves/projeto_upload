@@ -1,0 +1,17 @@
+
+
+.imgDash {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.bolinha{
+  width: 600px;
+  height: 600px;
+  border-radius: 100%;
+  border-color: #2666FA;
+  border-style: solid;
+  border-width: 80px;
+  position: absolute;
+}
