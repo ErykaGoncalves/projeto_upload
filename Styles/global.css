@@ -62,13 +62,12 @@ a {
     align-items: center;
 }
 
-.container {
+.content {
     width: 100%;
 }
 
 .navbar-brand {
-    box-shadow: 0.5px 2px 5px #0000005e;
-    width: 100vw;
+    width: 100%;
 }
 
 .menu-item {
