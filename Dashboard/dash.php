@@ -22,9 +22,9 @@
                 <img src="../img/logo.svg" alt="Bootstrap" width="250" height="50">
             </div>
             <ol class="menu-list">
-                <li><a href="http://127.0.0.1:5500/Dashboard/dash.html">Dashboard</li><br></a>
-                <li><a href="http://127.0.0.1:5500/uploadFiles/index.html">Upload de campanha</li></a><br>
-                <li><a href="http://127.0.0.1:5500/ListagemData/index.html">Listagem de campanha</li><br></a>
+                <li><a href="http://127.0.0.1:5500/Dashboard/dash.php">Dashboard</li><br></a>
+                <li><a href="http://127.0.0.1:5500/uploadFiles/index.php">Upload de campanha</li></a><br>
+                <li><a href="http://127.0.0.1:5500/ListagemData/index.php">Listagem de campanha</li><br></a>
             </ol>
         </div>
         <div class="content">

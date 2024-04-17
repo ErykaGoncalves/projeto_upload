@@ -1,26 +1,44 @@
 <?php 
 
-$arquivo = $_FILES['arquivo'];
+$arquivo = $_FILES['fileToUpload'];
 
-if ($arquivo['type'] == "application/vnd.ms-excel") {
+// echo "<pre>";
+// print_r($arquivo);
+// exit;
+
+if ($arquivo['type'] == "text/csv") {
     $dados_arquivo = fopen($arquivo['tmp_name'], "r");
-    $regexFixo = '/^\(\d{2}\)\s\d{4}-\d{4}$/';
-    $regexMovel = '/^(\+\d{2})?(\d{2})?\d{4,5}9?\d{4}$/';
+    $regex = '/^(?:(?:\+|00)?(55)\s?)?(?:(?:0?[1-9][0-9])?\s?)?(?:9\d{4}-?\d{4}|(?:[2-9]|([2-9][0-9]))\d{3}-?\d{4})$/';
     $arrErro = array();
     $count = 2;
+    $numeroVazios = 0;
+    $numerosErrados = 0;
 
     while($linha = fgetcsv($dados_arquivo, 1000, ";")){
-        if (isset($linha[3])) {
-            if (!preg_match($regexMovel, $linha[3]) && !preg_match($regexFixo, $linha[3])) {
+
+        if (!isset($linha[3]) || isset($linha[3]) && !$linha[3]) {
+            // $arrTempErro = array('Numero' => 'Está Vazio', 'Linha' => $count);
+            // array_push($arrErro, $arrTempErro);
+            $numeroVazios++;
+        } else {
+
+            $numeroSemEs = str_replace(" ", "", $linha[3]);
+            $numeroSemPara = str_replace("(", "", $numeroSemEs);
+            $numeroSemPara1 = str_replace(")", "", $numeroSemPara);
+            $numeroFormatado = str_replace("-", "", $numeroSemPara1);
+
+            if (!preg_match($regex, $numeroFormatado)) {
                 $arrTempErro = array('Numero' => $linha[3], 'Linha' => $count);
                 array_push($arrErro, $arrTempErro);
+                $numerosErrados++;
             }
-        } else {
-            $arrTempErro = array('Numero' => 'Está Vazio', 'Linha' => $count);
-            array_push($arrErro, $arrTempErro);
         }
         $count++;
     }
+
+    // echo "<pre>";
+    // print_r($arrErro);
+    // exit;
 
     if (count($arrErro) > 0) {
         echo '<script>

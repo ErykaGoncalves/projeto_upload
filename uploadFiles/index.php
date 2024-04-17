@@ -22,9 +22,9 @@
         <img src="../img/logo.svg" alt="Bootstrap" width="250" height="50">
       </div>
       <ol class="menu-list">
-        <li><a href="http://127.0.0.1:5500/Dashboard/dash.html">Dashboard</a></li><br>
-        <li><a href="http://127.0.0.1:5500/uploadFiles/index.html">Upload de campanha</a></li><br>
-        <li><a href="http://127.0.0.1:5500/ListagemData/index.html">Listagem de campanha</a></li><br>
+        <li><a href="http://127.0.0.1:5500/Dashboard/dash.php">Dashboard</a></li><br>
+        <li><a href="http://127.0.0.1:5500/uploadFiles/index.php">Upload de campanha</a></li><br>
+        <li><a href="http://127.0.0.1:5500/ListagemData/index.php">Listagem de campanha</a></li><br>
       </ol>
     </div>
     <div class="content">
@@ -36,7 +36,7 @@
         </div>
       </nav>
       <h1 class="title">Upload de Arquivo</h1>
-      <form class="formUpdate" action="processa.php" method="POST" enctype="multipart/form-data">
+      <form class="formUpdate" action="./processa.php" method="POST" enctype="multipart/form-data">
         <div class="areaUpload">
           <div class="icoActionUpdate">
             <img alt="upload" src="../img/ico-upload.svg" /><br>
