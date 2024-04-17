@@ -4,3 +4,11 @@
     justify-content: flex;
     text-align: center;
 }
+
+.container{
+    margin-top: 50px;
+}
+
+.form-control{
+    margin-bottom: 50px;
+}

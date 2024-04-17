@@ -79,3 +79,12 @@ a {
 .menu-item:hover {
     background-color: #555;
 }
+
+
+.alert{
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
