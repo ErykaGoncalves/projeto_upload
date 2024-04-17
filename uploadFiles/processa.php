@@ -60,39 +60,31 @@
             }
             echo '</div>';
         } else {
-            // Insere os dados no banco de dados
             $servername = "localhost";
-            $username = "seu_usuario";
-            $password = "sua_senha";
-            $dbname = "nome_do_banco";
+            $username = "root";
+            $password = "";
+            $dbname = "banco_asc";
 
-            // Cria a conexão
             $conn = new mysqli($servername, $username, $password, $dbname);
 
-            // Verifica a conexão
             if ($conn->connect_error) {
                 die("Conexão falhou: " . $conn->connect_error);
             }
 
-            // Prepara a consulta SQL
             $campanha = $_POST['inputFilter'];
-            $sql = "INSERT INTO sua_tabela (numero, campanha) VALUES (?, ?)";
+            $sql = "INSERT INTO usuarios (numero, campanha) VALUES (?, ?)";
 
-            // Prepara e executa a declaração
             if ($stmt = $conn->prepare($sql)) {
                 $stmt->bind_param("ss", $numero, $campanha);
 
-                // Insere cada número no banco de dados
                 foreach ($arrErro as $erro) {
                     $numero = $erro['Numero'];
                     $stmt->execute();
                 }
 
-                // Fecha a declaração
                 $stmt->close();
             }
 
-            // Fecha a conexão
             $conn->close();
         }
     } else {
