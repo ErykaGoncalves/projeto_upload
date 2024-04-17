@@ -9,6 +9,9 @@
     margin-top: 50px;
 }
 
-.form-control{
+.form-select{
     margin-bottom: 50px;
+    width: 50%;
+    height: 46px;
+    border-radius: 8px;
 }

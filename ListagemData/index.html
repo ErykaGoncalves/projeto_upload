@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
         integrity="sha512-47uFmC5RMPezHMm+e1zJoqSgYTX4L9mK1ZuAox2lLx2C7TpH66mFqXbu+e1tyhYcAJK7eKc/sjGthN/5+MIlhA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="../Styles/styleList.css">
     <link rel="stylesheet" href="../Styles/global.css">
 
@@ -22,9 +22,9 @@
                 <img src="../img/logo.svg" alt="Bootstrap" width="250" height="50">
             </div>
             <ol class="menu-list">
-                <li><a href="http://127.0.0.1:5500/projeto_upload/Dashboard/dash.html">Dashboard</li><br></a>
-                <li><a href="http://127.0.0.1:5500//projeto_upload/uploadFiles/index.html">Upload de campanha</li></a><br>
-                <li><a href="http://127.0.0.1:5500/projeto_upload/ListagemData/index.html">Listagem de campanha</li><br></a>
+                <li><a href="http://127.0.0.1:5500/Dashboard/dash.html">Dashboard</a></li><br>
+                <li><a href="http://127.0.0.1:5500/uploadFiles/index.html">Upload de campanha</a></li><br>
+                <li><a href="http://127.0.0.1:5500/ListagemData/index.html">Listagem de campanha</a></li><br>
             </ol>
         </div>
         <div class="content">
@@ -38,9 +38,14 @@
             <h1 class="title">Listagem de dados</h1>
             <div class="alert alert-primary" role="alert">
                 Informe o nome de sua campanha!
-              </div>
+            </div>
             <div class="container">
-                <input type="text" id="inputFilter" class="form-control mb-3" placeholder="Digite para filtrar">
+                <select id="selectCampanha" class="form-select" aria-label="Default select example">
+                    <option selected>Selecione a campanha</option>
+                    <option value="Gás">Gás</option>
+                    <option value="Maquiagem">Maquiagem</option>
+                    <option value="Mercado grátis">Mercado grátis</option>
+                </select>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -57,7 +62,7 @@
                     </thead>
                     <tbody id="tableBody">
                         <tr>
-                            <th scope="row">1</th>
+                            <th scope="row">Gás</th>
                             <td>Mark</td>
                             <td>Otto</td>
                             <td>@mdo</td><td>Mark</td>
@@ -67,7 +72,7 @@
                             <td>@mdo</td>
                         </tr>
                         <tr>
-                            <th scope="row">2</th>
+                            <th scope="row">Maquiagem</th>
                             <td>Jacob</td>
                             <td>Thornton</td>
                             <td>@fat</td>
@@ -78,7 +83,7 @@
                             <td>@fat</td>
                         </tr>
                         <tr>
-                            <th scope="row">3</th>
+                            <th scope="row">Mercado grátis</th>
                             <td>Larry the Bird</td>
                             <td>@twitter</td>
                             <td>Larry the Bird</td>
@@ -95,13 +100,13 @@
     </div>
 
     <script>
-        document.getElementById('inputFilter').addEventListener('input', function () {
-            const inputValue = this.value.toLowerCase();
+        document.getElementById('selectCampanha').addEventListener('change', function () {
+            const selectedValue = this.value.toLowerCase();
             const rows = document.querySelectorAll('#tableBody tr');
 
             rows.forEach(row => {
-                const rowText = row.textContent.toLowerCase();
-                if (rowText.includes(inputValue)) {
+                const rowText = row.firstElementChild.textContent.toLowerCase();
+                if (rowText.includes(selectedValue)) {
                     row.style.display = '';
                 } else {
                     row.style.display = 'none';
