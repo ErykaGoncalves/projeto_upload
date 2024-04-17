@@ -13,7 +13,6 @@
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="../Styles/styleUpload.css">
   <link rel="stylesheet" href="../Styles/global.css">
-
 </head>
 
 <body>
@@ -23,9 +22,9 @@
         <img src="../img/logo.svg" alt="Bootstrap" width="250" height="50">
       </div>
       <ol class="menu-list">
-        <li><a href="http://127.0.0.1:5500/Dashboard/dash.html">Dashboard</li><br></a>
-        <li><a href="http://127.0.0.1:5500/uploadFiles/index.html">Upload de campanha</li></a><br>
-        <li><a href="http://127.0.0.1:5500/ListagemData/index.html">Listagem de campanha</li><br></a>
+        <li><a href="http://127.0.0.1:5500/Dashboard/dash.html">Dashboard</a></li><br>
+        <li><a href="http://127.0.0.1:5500/uploadFiles/index.html">Upload de campanha</a></li><br>
+        <li><a href="http://127.0.0.1:5500/ListagemData/index.html">Listagem de campanha</a></li><br>
       </ol>
     </div>
     <div class="content">
@@ -37,12 +36,12 @@
         </div>
       </nav>
       <h1 class="title">Upload de Arquivo</h1>
-      <form class="formUpdate" action="upload.php" method="post" enctype="multipart/form-data">
+      <form class="formUpdate" action="processa.php" method="POST" enctype="multipart/form-data">
         <div class="areaUpload">
           <div class="icoActionUpdate">
             <img alt="upload" src="../img/ico-upload.svg" /><br>
             <div>
-              <input class="inputUpload" type="file" name="fileToUpload" id="fileToUpload">
+              <input class="inputUpload" type="file" name="fileToUpload" id="fileToUpload" accept=".csv">
             </div>
           </div>
         </div>
@@ -50,10 +49,35 @@
           Informe o nome de sua campanha!
         </div>
         <input type="text" id="inputFilter" class="form-control mb-3" placeholder="Digite sua campanha">
-
-        <input class="inputSendUpload" type="submit" value="Enviar Arquivo" name="submit">
+        <input class="inputSendUpload" type="submit" value="Enviar Arquivo">
       </form>
     </div>
+  </div>
+
+ <div class="modal fade" id="modalErro" tabindex="-1" role="dialog" aria-labelledby="modalErroLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalErroLabel">Erro no Envio do Arquivo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <?php foreach ($arrErro as $erro): ?>
+          Número com erro: <?php echo $erro['Numero']; ?> - Linha: <?php echo $erro['Linha']; ?><br>
+        <?php endforeach; ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+  integrity="sha384-pzD5VmkPd13L3Xy3TkPuahzLr9Qn3K+OzL6FwA5WWQNj5x6bXvcv1pPV5K9xkg1y" crossorigin="anonymous"></script>
 </body>
 
 </html>
