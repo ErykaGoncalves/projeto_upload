@@ -11,33 +11,49 @@
 
 <body>
     <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $arquivo = $_FILES['fileToUpload'];
 
-    $arquivo = $_FILES['fileToUpload'];
+        if ($arquivo['type'] == "text/csv") {
+            $dados_arquivo = fopen($arquivo['tmp_name'], "r");
+            $regex = '/^(?:(?:\+|00)?(55)\s?)?(?:(?:0?[1-9][0-9])?\s?)?(?:9\d{4}-?\d{4}|(?:[2-9]|([2-9][0-9]))\d{3}-?\d{4})$/';
+            $arrErro = array();
+            $count = 2;
+            $numeroVazios = 0;
+            $numerosErrados = 0;
 
-    // echo "<pre>";
-    // print_r($arquivo);
-    // exit;
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "banco_asc";
 
-    if ($arquivo['type'] == "text/csv") {
-        $dados_arquivo = fopen($arquivo['tmp_name'], "r");
-        $regex = '/^(?:(?:\+|00)?(55)\s?)?(?:(?:0?[1-9][0-9])?\s?)?(?:9\d{4}-?\d{4}|(?:[2-9]|([2-9][0-9]))\d{3}-?\d{4})$/';
-        $arrErro = array();
-        $count = 2;
-        $numeroVazios = 0;
-        $numerosErrados = 0;
+            $conn = new mysqli($servername, $username, $password, $dbname);
 
-        while ($linha = fgetcsv($dados_arquivo, 1000, ";")) {
+            if ($conn->connect_error) {
+                die("Conexão falhou: " . $conn->connect_error);
+            }
 
-            if (!isset($linha[3]) || isset($linha[3]) && !$linha[3]) {
-                // $arrTempErro = array('Numero' => 'Está Vazio', 'Linha' => $count);
-                // array_push($arrErro, $arrTempErro);
-                $numeroVazios++;
-            } else {
+            // Preparação da consulta SQL
+            $sql = "INSERT INTO usuarios (campanha, nome, sobrenome, email, telefone, endereco, cidade, cep, dataNascimento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
 
-                $numeroSemEs = str_replace(" ", "", $linha[3]);
-                $numeroSemPara = str_replace("(", "", $numeroSemEs);
-                $numeroSemPara1 = str_replace(")", "", $numeroSemPara);
-                $numeroFormatado = str_replace("-", "", $numeroSemPara1);
+            if (!$stmt) {
+                die("Preparação da consulta falhou: " . $conn->error);
+            }
+
+            rewind($dados_arquivo);
+
+            $arrDadosUsuarios = array();
+            while ($linha = fgetcsv($dados_arquivo, 1000, ";")) {
+
+                if (!isset($linha[3]) || isset($linha[3]) && !$linha[3]) {
+                    $numeroVazios++;
+                } else {
+
+                    $numeroSemEs = str_replace(" ", "", $linha[3]);
+                    $numeroSemPara = str_replace("(", "", $numeroSemEs);
+                    $numeroSemPara1 = str_replace(")", "", $numeroSemPara);
+                    $numeroFormatado = str_replace("-", "", $numeroSemPara1);
 
                 if (!preg_match($regex, $numeroFormatado)) {
                     $arrTempErro = array('Numero' => $linha[3], 'Linha' => $count);
@@ -60,38 +76,47 @@
             }
             echo '</div>';
         } else {
+            // Insere os dados no banco de dados
             $servername = "localhost";
             $username = "root";
             $password = "";
-            $dbname = "banco_asc";
+            $dbname = "nome_do_banco";
 
+            // Cria a conexão
             $conn = new mysqli($servername, $username, $password, $dbname);
 
+            // Verifica a conexão
             if ($conn->connect_error) {
                 die("Conexão falhou: " . $conn->connect_error);
             }
 
+            // Prepara a consulta SQL
             $campanha = $_POST['inputFilter'];
-            $sql = "INSERT INTO usuarios (numero, campanha) VALUES (?, ?)";
+            $sql = "INSERT INTO sua_tabela (numero, campanha) VALUES (?, ?)";
 
+            // Prepara e executa a declaração
             if ($stmt = $conn->prepare($sql)) {
                 $stmt->bind_param("ss", $numero, $campanha);
 
+                // Insere cada número no banco de dados
                 foreach ($arrErro as $erro) {
                     $numero = $erro['Numero'];
                     $stmt->execute();
                 }
 
+                // Fecha a declaração
                 $stmt->close();
             }
 
+            // Fecha a conexão
             $conn->close();
         }
     } else {
         echo '<div class="alert alert-danger" role="alert">Necessário enviar um arquivo do tipo CSV</div>';
         exit;
     }
-?>
+    ?>
+
 </body>
 
 </html>

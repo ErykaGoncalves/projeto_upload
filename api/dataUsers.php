@@ -1,44 +1,47 @@
 <?php
-// Verifica o método da requisição
 $method = $_SERVER['REQUEST_METHOD'];
 
-// Endpoint GET
 if ($method === 'GET') {
-    // Lê o arquivo CSV e extrai os dados
-    $csv_file = 'C:\xamppFront\htdocs\projeto_upload\public\img\contatos.csv'; // Substitua pelo caminho do seu arquivo CSV
+    $csv_file = 'http://localhost/projeto_upload/public/img/contatos.csv';
+
     $csv_data = array_map('str_getcsv', file($csv_file));
 
-    // Extrai os dados do CSV
-    $dados = array(
-        'nome' => $csv_data[0][1], // Supondo que a primeira linha do CSV contenha o nome
-        'sobrenome' => $csv_data[0][2], // Supondo que a primeira linha do CSV contenha o sobrenome
-        'email' => $csv_data[0][3], // Supondo que a primeira linha do CSV contenha o email
-        'telefone' => $csv_data[0][4],,
-        'endereco' => $csv_data[0][5],,
-        'cidade' => $csv_data[0][6],,
-        'cep' => $csv_data[0][7],,
-        'data_nascimento' => $csv_data[0][8],
+    $csv_header = $csv_data[0];
+    $dados = array();
+
+    for ($i = 1; $i < count($csv_data); $i++) {
+        $csv_values = $csv_data[$i];
+
+        $linha = array();
+
+        foreach ($csv_header as $index => $header) {
+            if (isset($csv_values[$index])) {
+                $valores = explode(';', $csv_values[$index]);
+
+                foreach ($valores as $key => $valor) {
+                    $linha[$key] = $valor;
+                }
+            } else {
+                $linha[$key] = '';
+            }
+        }
+        $dados[] = $linha;
+    }
+
+    http_response_code(200);
+
+    header('Content-Type: application/json');
+
+    $response = array(
+        'status_code' => 200,
+        'msg' => 'deu tudo certo',
+        'result' => $dados
     );
 
-    // Retorna os dados em formato JSON
-    echo json_encode($dados);
-}
+    echo json_encode($response, JSON_PRETTY_PRINT);
 
-// Endpoint POST
-if ($method === 'POST') {
-    // Obtém os dados enviados via POST
-    $post_data = json_decode(file_get_contents('php://input'), true);
-
-    // Verifica se os dados foram recebidos corretamente
-    if (isset($post_data['campanha'])) {
-        // Aqui você pode realizar o que for necessário com a campanha
-        $campanha = $post_data['campanha'];
-
-        // Retorna uma resposta de sucesso
-        echo json_encode(array('success' => true, 'message' => 'Campanha recebida com sucesso: ' . $campanha));
-    } else {
-        // Retorna uma mensagem de erro se os dados não forem recebidos corretamente
-        echo json_encode(array('success' => false, 'message' => 'Dados inválidos para a campanha'));
-    }
+    echo '<pre>';
+    print_r($dados);
+    echo '<pre>';
 }
 ?>
