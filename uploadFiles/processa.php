@@ -33,7 +33,6 @@
                 die("Conexão falhou: " . $conn->connect_error);
             }
 
-            // Preparação da consulta SQL
             $sql = "INSERT INTO usuarios (campanha, nome, sobrenome, email, telefone, endereco, cidade, cep, dataNascimento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
 
@@ -41,9 +40,6 @@
                 die("Preparação da consulta falhou: " . $conn->error);
             }
 
-            rewind($dados_arquivo);
-
-            $arrDadosUsuarios = array();
             while ($linha = fgetcsv($dados_arquivo, 1000, ";")) {
 
                 if (!isset($linha[3]) || isset($linha[3]) && !$linha[3]) {
@@ -55,66 +51,61 @@
                     $numeroSemPara1 = str_replace(")", "", $numeroSemPara);
                     $numeroFormatado = str_replace("-", "", $numeroSemPara1);
 
-                if (!preg_match($regex, $numeroFormatado)) {
-                    $arrTempErro = array('Numero' => $linha[3], 'Linha' => $count);
-                    array_push($arrErro, $arrTempErro);
-                    $numerosErrados++;
+                    if (!preg_match($regex, $numeroFormatado)) {
+                        $arrTempErro = array('Numero' => $linha[3], 'Linha' => $count);
+                        array_push($arrErro, $arrTempErro);
+                        $numerosErrados++;
+                    } else {
+                        $campanha = $_POST['inputFilter'];
+                        $nome = $linha[0];
+                        $sobrenome = $linha[1];
+                        $email = $linha[2];
+                        $telefone = $numeroFormatado;
+                        $endereco = $linha[4];
+                        $cidade = $linha[5];
+                        $cep = $linha[6];
+                        $dataNascimento = $linha[7];
+
+                        $stmt->bind_param("sssssssss", $campanha, $nome, $sobrenome, $email, $telefone, $endereco, $cidade, $cep, $dataNascimento);
+                        $stmt->execute();
+                    }
                 }
-            }
-            $count++;
-        }
-
-        // echo "<pre>";
-        // print_r($arrErro);
-        // exit;
-
-        if (count($arrErro) > 0) {
-            echo '<div class="alert alert-danger" role="alert">';
-            echo '<strong>Erros encontrados:</strong><br>';
-            foreach ($arrErro as $erro) {
-                echo 'Número com erro: ' . $erro['Numero'] . ' - Linha: ' . $erro['Linha'] . '<br>';
-            }
-            echo '</div>';
-        } else {
-            // Insere os dados no banco de dados
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "nome_do_banco";
-
-            // Cria a conexão
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            // Verifica a conexão
-            if ($conn->connect_error) {
-                die("Conexão falhou: " . $conn->connect_error);
+                $count++;
             }
 
-            // Prepara a consulta SQL
-            $campanha = $_POST['inputFilter'];
-            $sql = "INSERT INTO sua_tabela (numero, campanha) VALUES (?, ?)";
 
-            // Prepara e executa a declaração
-            if ($stmt = $conn->prepare($sql)) {
-                $stmt->bind_param("ss", $numero, $campanha);
-
-                // Insere cada número no banco de dados
+            if ($arrErro > 0) {
+                echo '<div class="alert alert-danger" role="alert">';
+                echo '<strong>Erros encontrados:</strong><br>';
                 foreach ($arrErro as $erro) {
-                    $numero = $erro['Numero'];
-                    $stmt->execute();
+                    echo 'Número com erro: ' . $erro['Numero'] . ' - Linha: ' . $erro['Linha'] . '<br>';
                 }
-
-                // Fecha a declaração
-                $stmt->close();
+                echo '</div>';
+            } else {
+                echo "Dados salvos com sucesso!";
             }
-
-            // Fecha a conexão
-            $conn->close();
+        } else {
+            echo '<div class="alert alert-danger" role="alert">Necessário enviar um arquivo do tipo CSV</div>';
+            exit;
         }
-    } else {
-        echo '<div class="alert alert-danger" role="alert">Necessário enviar um arquivo do tipo CSV</div>';
-        exit;
-    }
+
+            $stmt->close();
+            $conn->close();
+
+            if (count($arrErro) > 0) {
+                echo '<div class="alert alert-danger" role="alert">';
+                echo '<strong>Erros encontrados:</strong><br>';
+                foreach ($arrErro as $erro) {
+                    echo 'Número com erro: ' . $erro['Numero'] . ' - Linha: ' . $erro['Linha'] . '<br>';
+                }
+                echo '</div>';
+            } else {
+                echo "Dados salvos com sucesso!";
+            }
+        } else {
+            echo '<div class="alert alert-danger" role="alert">Necessário enviar um arquivo do tipo CSV</div>';
+            exit;
+        }
     ?>
 
 </body>

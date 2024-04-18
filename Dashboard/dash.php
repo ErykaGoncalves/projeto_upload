@@ -19,19 +19,19 @@
     <div class="dashboard-container">
         <div class="menu">
             <div class="list">
-                <img src="../img/logo.svg" alt="Bootstrap" width="250" height="50">
+                <img src="../public/img/logo.svg" alt="Bootstrap" width="250" height="50">
             </div>
             <ol class="menu-list">
-                <li><a href="http://localhost/projeto_upload/Dashboard/dash.php">Dashboard</li><br></a>
-                <li><a href="http://localhost/projeto_upload/uploadFiles/">Upload de campanha</li></a><br>
-                <li><a href="http://localhost/projeto_upload/ListagemData/">Listagem de campanha</li><br></a>
+                <li><a href="http://localhost/ASC/projeto_upload/Dashboard/dash.php">Dashboard</li><br></a>
+                <li><a href="http://localhost/ASC/projeto_upload/uploadFiles/">Upload de campanha</li></a><br>
+                <li><a href="http://localhost/ASC/projeto_upload/ListagemData/">Listagem de campanha</li><br></a>
             </ol>
         </div>
         <div class="content">
             <nav class="navbar bg-body-tertiary">
                 <div class="container">
                     <a class="navbar-brand" href="#">
-                        <img src="../img/logo.svg" alt="Bootstrap" width="250" height="50">
+                        <img src="../public/img/logo.svg" alt="Bootstrap" width="250" height="50">
                     </a>
                 </div>
             </nav>
@@ -39,7 +39,7 @@
                 <div>
                     <h1 class="title">Seja Bem Vindo!</h1>
                     <div class="imgDash">
-                        <img alt="img dash" src="../img/dash.svg" width="1000">
+                        <img alt="img dash" src="../public/img/dash.svg" width="1000">
                     </div>
                 </div>
             </section>

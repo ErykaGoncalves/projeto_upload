@@ -2,7 +2,7 @@
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
-    $csv_file = 'http://localhost/projeto_upload/public/img/contatos.csv';
+    $csv_file = 'C:\xamppEryka\htdocs\ASC\projeto_upload\public\img\contatos.csv';
 
     $csv_data = array_map('str_getcsv', file($csv_file));
 

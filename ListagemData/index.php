@@ -16,19 +16,19 @@
     <div class="dashboard-container">
         <div class="menu">
             <div class="list">
-                <img src="../img/logo.svg" alt="Bootstrap" width="250" height="50">
+                <img src="../public/img/logo.svg" alt="Bootstrap" width="250" height="50">
             </div>
             <ol class="menu-list">
-                <li><a href="http://localhost/projeto_upload/Dashboard/dash.php">Dashboard</li><br></a>
-                <li><a href="http://localhost/projeto_upload/uploadFiles/">Upload de campanha</li></a><br>
-                <li><a href="http://localhost/projeto_upload/ListagemData/">Listagem de campanha</li><br></a>
+                <li><a href="http://localhost/ASC/projeto_upload/Dashboard/dash.php">Dashboard</li><br></a>
+                <li><a href="http://localhost/ASC/projeto_upload/uploadFiles/">Upload de campanha</li></a><br>
+                <li><a href="http://localhost/ASC/projeto_upload/ListagemData/">Listagem de campanha</li><br></a>
             </ol>
         </div>
         <div class="content">
             <nav class="navbar bg-body-tertiary">
                 <div class="container">
                     <a class="navbar-brand" href="#">
-                        <img src="../img/logo.svg" alt="Bootstrap" width="250" height="50">
+                        <img src="../public/img/logo.svg" alt="Bootstrap" width="250" height="50">
                     </a>
                 </div>
             </nav>
@@ -37,7 +37,6 @@
                 <select id="selectCampanha" class="form-select" aria-label="Default select example">
                     <option selected>Selecione a campanha</option>
                     <?php
-                    // Realiza a conexão com o banco de dados
                     $servername = "localhost";
                     $username = "root";
                     $password = "";
@@ -45,25 +44,20 @@
 
                     $conn = new mysqli($servername, $username, $password, $dbname);
 
-                    // Verifica se a conexão foi bem sucedida
                     if ($conn->connect_error) {
                         die("Conexão falhou: " . $conn->connect_error);
                     }
 
-                    // Query para selecionar os valores distintos da coluna 'campanha' na tabela usuarios
                     $sql = "SELECT DISTINCT campanha FROM usuarios";
                     $result = $conn->query($sql);
 
-                    // Verifica se existem registros retornados pela consulta
                     if ($result->num_rows > 0) {
-                        // Exibe cada valor da coluna 'campanha' como uma opção no select
                         while ($row = $result->fetch_assoc()) {
                             echo "<option value='" . $row["campanha"] . "'>" . $row["campanha"] . "</option>";
                         }
                     } else {
                         echo "<option value='' disabled>Nenhuma campanha encontrada</option>";
                     }
-                    // Fecha a conexão com o banco de dados
                     $conn->close();
                     ?>
                 </select>
@@ -84,7 +78,6 @@
                     </thead>
                     <tbody id="tableBody">
                         <?php
-                        // Realiza a conexão com o banco de dados
                         $servername = "localhost";
                         $username = "root";
                         $password = "";
@@ -92,18 +85,14 @@
 
                         $conn = new mysqli($servername, $username, $password, $dbname);
 
-                        // Verifica se a conexão foi bem sucedida
                         if ($conn->connect_error) {
                             die("Conexão falhou: " . $conn->connect_error);
                         }
 
-                        // Query para selecionar todos os registros da tabela usuarios
                         $sql = "SELECT * FROM usuarios";
                         $result = $conn->query($sql);
 
-                        // Verifica se existem registros retornados pela consulta
                         if ($result->num_rows > 0) {
-                            // Exibe cada linha de dados na tabela
                             while ($row = $result->fetch_assoc()) {
                                 echo "<tr>";
                                 echo "<td>" . $row["campanha"] . "</td>";
@@ -120,7 +109,6 @@
                         } else {
                             echo "<tr><td colspan='9'>Nenhum dado encontrado</td></tr>";
                         }
-                        // Fecha a conexão com o banco de dados
                         $conn->close();
                         ?>
                     </tbody>
