@@ -69,9 +69,6 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-pzD5VmkPd13L3Xy3TkPuahzLr9Qn3K+OzL6FwA5WWQNj5x6bXvcv1pPV5K9xkg1y" crossorigin="anonymous"></script>
-<<<<<<< HEAD
-  </body>
-=======
   <script>
     // Enviar solicitação GET para obter os dados do CSV quando a página carregar
     window.addEventListener('load', function() {
@@ -91,6 +88,5 @@
     });
   </script>
 </body>
->>>>>>> 896178a434a4cbc8ca6e0190b519bc51e81a5096
 
 </html>
