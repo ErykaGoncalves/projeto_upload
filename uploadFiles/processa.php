@@ -62,8 +62,8 @@
         } else {
             // Insere os dados no banco de dados
             $servername = "localhost";
-            $username = "seu_usuario";
-            $password = "sua_senha";
+            $username = "root";
+            $password = "";
             $dbname = "nome_do_banco";
 
             // Cria a conexão
