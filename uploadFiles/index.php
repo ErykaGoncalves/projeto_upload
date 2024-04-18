@@ -19,9 +19,9 @@
         <img src="../img/logo.svg" alt="Bootstrap" width="250" height="50">
       </div>
       <ol class="menu-list">
-        <li><a href="http://127.0.0.1:5500/Dashboard/dash.php">Dashboard</a></li><br>
-        <li><a href="http://127.0.0.1:5500/uploadFiles/index.php">Upload de campanha</a></li><br>
-        <li><a href="http://127.0.0.1:5500/ListagemData/index.php">Listagem de campanha</a></li><br>
+        <li><a href="http://localhost/projeto_upload/Dashboard/dash.php">Dashboard</li><br></a>
+        <li><a href="http://localhost/projeto_upload/uploadFiles/">Upload de campanha</li></a><br>
+        <li><a href="http://localhost/projeto_upload/ListagemData/">Listagem de campanha</li><br></a>
       </ol>
     </div>
     <div class="content">
@@ -60,13 +60,6 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          <?php foreach ($arrErro as $erro) : ?>
-            <div class="alert alert-danger" role="alert">
-              Número com erro: <?php echo $erro['Numero']; ?> - Linha: <?php echo $erro['Linha']; ?>
-            </div>
-          <?php endforeach; ?>
-        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
@@ -76,6 +69,28 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-pzD5VmkPd13L3Xy3TkPuahzLr9Qn3K+OzL6FwA5WWQNj5x6bXvcv1pPV5K9xkg1y" crossorigin="anonymous"></script>
+<<<<<<< HEAD
   </body>
+=======
+  <script>
+    // Enviar solicitação GET para obter os dados do CSV quando a página carregar
+    window.addEventListener('load', function() {
+      fetch('http://localhost/sua-api.php')
+        .then(response => response.json())
+        .then(data => {
+          // Manipule os dados do CSV aqui
+          console.log(data);
+          // Por exemplo, você pode preencher os campos do formulário com os dados recebidos
+          document.getElementById('nome').value = data.nome;
+          document.getElementById('sobrenome').value = data.sobrenome;
+          // Continue preenchendo os outros campos conforme necessário
+        })
+        .catch(error => {
+          console.error('Erro ao buscar os dados:', error);
+        });
+    });
+  </script>
+</body>
+>>>>>>> 896178a434a4cbc8ca6e0190b519bc51e81a5096
 
 </html>
